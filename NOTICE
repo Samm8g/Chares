@@ -1,0 +1,39 @@
+# NOTICE
+
+This project includes open source software components.
+Each component is licensed under its respective terms, listed below.
+
+---
+
+## Chaers
+Copyright (C) 2025 Samm
+Licensed under the **GNU General Public License v3.0**
+<https://github.com/Samm8g/Chaers/blob/main/LICENSE>
+
+---
+
+## AndroidX Libraries
+Licensed under the **Apache License, Version 2.0**
+<https://developer.android.com/jetpack/androidx/licenses/LICENSE-2.0.txt>
+
+---
+
+## Kotlin Coroutines
+Licensed under the **Apache License, Version 2.0**
+<https://github.com/Kotlin/kotlinx.coroutines/blob/master/LICENSE>
+
+---
+
+## Room (AndroidX component)
+Licensed under the **Apache License, Version 2.0**
+<https://developer.android.com/jetpack/androidx/licenses/LICENSE-2.0.txt>
+
+---
+
+## JUnit
+Licensed under the **Eclipse Public License v1.0**
+<https://www.eclipse.org/legal/epl-v10.html>
+
+---
+
+This NOTICE file is for informational purposes only and does not modify the license terms of any component.
