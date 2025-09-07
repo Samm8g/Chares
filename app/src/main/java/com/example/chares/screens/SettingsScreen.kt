@@ -2,11 +2,17 @@
 package com.example.chares.screens
 
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -21,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -29,25 +36,88 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.chares.R
 import com.example.chares.viewmodels.SettingsViewModel
+import android.net.Uri
+import android.widget.Toast
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import kotlinx.coroutines.launch
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
     val theme by viewModel.theme.collectAsState()
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    val exportLauncher = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) {
+        uri: Uri? ->
+        uri?.let {
+            scope.launch {
+                val jsonString = viewModel.exportChoreData()
+                context.contentResolver.openOutputStream(uri)?.use {
+                    outputStream ->
+                    outputStream.write(jsonString.toByteArray())
+                }
+                Toast.makeText(context, "Chore data exported successfully!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
+        uri: Uri? ->
+        uri?.let {
+            scope.launch {
+                val stringBuilder = StringBuilder()
+                context.contentResolver.openInputStream(uri)?.use {
+                    inputStream ->
+                    BufferedReader(InputStreamReader(inputStream)).use {
+                        reader ->
+                        var line: String?
+                        while (reader.readLine().also { line = it } != null) {
+                            stringBuilder.append(line)
+                        }
+                    }
+                }
+                val jsonString = stringBuilder.toString()
+                viewModel.importChoreData(jsonString)
+                Toast.makeText(context, "Chore data imported successfully!", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     LazyColumn {
         item {
             ListItem(
                 headlineContent = { Text(stringResource(id = R.string.settings_screen_import_export)) },
+                trailingContent = {
+                    Row {
+                        Button(onClick = { exportLauncher.launch("chares_chores_export.json") }) {
+                            Text(stringResource(id = R.string.settings_screen_export_chares))
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Button(onClick = { importLauncher.launch(arrayOf("application/json")) }) {
+                            Text(stringResource(id = R.string.settings_screen_import_chares))
+                        }
+                    }
+                },
                 modifier = Modifier.clickable { /* TODO */ }
+            )
+            Text(
+                text = stringResource(id = R.string.settings_screen_import_disclaimer),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
             )
         }
         item {
             var expanded by remember { mutableStateOf(false) }
             ListItem(
                 headlineContent = { Text(stringResource(id = R.string.settings_screen_language)) },
-                supportingContent = {
+                trailingContent = {
                     ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = {expanded = !expanded}) {
                         TextField(
                             value = context.resources.configuration.locales[0].displayName,
@@ -77,8 +147,8 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
         item {
             ListItem(
                 headlineContent = { Text(stringResource(id = R.string.settings_screen_theme)) },
-                supportingContent = {
-                    Row {
+                trailingContent = {
+                    Row(horizontalArrangement = Arrangement.End) {
                         OutlinedButton(onClick = { viewModel.setTheme("system") }, enabled = theme != "system") {
                             Text(stringResource(id = R.string.settings_screen_theme_system))
                         }
