@@ -1,14 +1,15 @@
 package com.example.chares.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Divider
-import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.Text
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,8 +17,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.example.chares.R
 import com.example.chares.composables.AddChoreDialog
@@ -41,18 +45,31 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
         val incompleteChores = chores.filter { !it.isCompleted }
         val completedChores = chores.filter { it.isCompleted && (it.completedAt != null && System.currentTimeMillis() - it.completedAt < 3600000) }
 
-        Column(modifier = Modifier.padding(paddingValues)) {
-            ChoreList(chores = incompleteChores, onChoreCheckedChange = { chore, isChecked ->
-                viewModel.update(chore, isChecked)
-            }, showCompletionDate = true, viewModel = viewModel)
-
-            if (completedChores.isNotEmpty()) {
-                HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
+        if (incompleteChores.isEmpty() && completedChores.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.home_screen_no_chares_found),
+                    color = Color.Gray,
+                    textAlign = TextAlign.Center
+                )
             }
+        } else {
+            Column(modifier = Modifier.padding(paddingValues)) {
+                ChoreList(chores = incompleteChores, onChoreCheckedChange = { chore, isChecked ->
+                    viewModel.update(chore, isChecked)
+                }, showCompletionDate = true, viewModel = viewModel)
 
-            ChoreList(chores = completedChores, onChoreCheckedChange = { chore, isChecked ->
-                viewModel.update(chore, isChecked)
-            }, showCompletionDate = true, viewModel = viewModel)
+                if (completedChores.isNotEmpty()) {
+                    HorizontalDivider()
+                }
+
+                ChoreList(chores = completedChores, onChoreCheckedChange = { chore, isChecked ->
+                    viewModel.update(chore, isChecked)
+                }, showCompletionDate = true, viewModel = viewModel)
+            }
         }
     }
 
