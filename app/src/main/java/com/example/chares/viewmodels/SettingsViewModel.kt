@@ -34,6 +34,12 @@ class SettingsViewModel(
         initialValue = "en"
     )
 
+    val dynamicTheme: StateFlow<Boolean> = themeManager.dynamicTheme.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = true
+    )
+
     fun setTheme(theme: String) {
         viewModelScope.launch {
             val themeValue = when (theme) {
@@ -48,6 +54,12 @@ class SettingsViewModel(
     fun setLanguage(language: String) {
         viewModelScope.launch {
             languageManager.setLanguage(language)
+        }
+    }
+
+    fun setDynamicTheme(isDynamic: Boolean) {
+        viewModelScope.launch {
+            themeManager.setDynamicTheme(isDynamic)
         }
     }
 }
