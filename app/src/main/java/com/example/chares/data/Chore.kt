@@ -2,7 +2,9 @@ package com.example.chares.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity(tableName = "chores")
 data class Chore(
     @PrimaryKey(autoGenerate = true)

@@ -3,6 +3,11 @@ package com.example.chares.repositories
 import com.example.chares.data.Chore
 import com.example.chares.data.ChoreDao
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.decodeFromString
+import java.io.File
 
 class ChoreRepository(private val choreDao: ChoreDao) {
     val allChores: Flow<List<Chore>> = choreDao.getAllChores()
@@ -17,5 +22,16 @@ class ChoreRepository(private val choreDao: ChoreDao) {
 
     suspend fun delete(chore: Chore) {
         choreDao.deleteChore(chore)
+    }
+
+    suspend fun exportChoreData(): String {
+        val chores = choreDao.getAllChoresOnce()
+        return Json.encodeToString(ListSerializer(Chore.serializer()), chores)
+    }
+
+    suspend fun importChoreData(jsonString: String) {
+        val chores = Json.decodeFromString(ListSerializer(Chore.serializer()), jsonString)
+        choreDao.deleteAllChores()
+        choreDao.insertAll(chores)
     }
 }

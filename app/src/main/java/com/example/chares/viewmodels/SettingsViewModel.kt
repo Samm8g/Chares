@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.chares.data.preferences.LanguageManager
 import com.example.chares.data.preferences.ThemeManager
+import com.example.chares.repositories.ChoreRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -13,7 +14,8 @@ import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val themeManager: ThemeManager,
-    private val languageManager: LanguageManager
+    private val languageManager: LanguageManager,
+    private val choreRepository: ChoreRepository
 ) : ViewModel() {
 
     val theme: StateFlow<String> = themeManager.theme.map {
@@ -62,16 +64,25 @@ class SettingsViewModel(
             themeManager.setDynamicTheme(isDynamic)
         }
     }
+
+    suspend fun exportChoreData(): String {
+        return choreRepository.exportChoreData()
+    }
+
+    suspend fun importChoreData(jsonString: String) {
+        choreRepository.importChoreData(jsonString)
+    }
 }
 
 class SettingsViewModelFactory(
     private val themeManager: ThemeManager,
-    private val languageManager: LanguageManager
+    private val languageManager: LanguageManager,
+    private val choreRepository: ChoreRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SettingsViewModel(themeManager, languageManager) as T
+            return SettingsViewModel(themeManager, languageManager, choreRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

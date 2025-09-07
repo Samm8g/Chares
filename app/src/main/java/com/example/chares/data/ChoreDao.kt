@@ -20,4 +20,13 @@ interface ChoreDao {
 
     @Delete
     suspend fun deleteChore(chore: Chore)
+
+    @Insert
+    suspend fun insertAll(chores: List<Chore>)
+
+    @Query("SELECT * FROM chores")
+    suspend fun getAllChoresOnce(): List<Chore>
+
+    @Query("DELETE FROM chores")
+    suspend fun deleteAllChores()
 }
