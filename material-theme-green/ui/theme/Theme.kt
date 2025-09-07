@@ -1,4 +1,4 @@
-package com.example.chares.ui.theme
+package com.example.compose
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -238,7 +238,7 @@ private val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerLowest = surfaceContainerLowestDarkHighContrast,
     surfaceContainerLow = surfaceContainerLowDarkHighContrast,
     surfaceContainer = surfaceContainerDarkHighContrast,
-    surfaceContainerHigh = surfaceContainerHighDarkMediumContrast,
+    surfaceContainerHigh = surfaceContainerHighDarkHighContrast,
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
@@ -255,7 +255,7 @@ val unspecified_scheme = ColorFamily(
 )
 
 @Composable
-fun CharesTheme(
+fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
@@ -277,3 +277,4 @@ fun CharesTheme(
     content = content
   )
 }
+
