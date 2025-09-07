@@ -16,6 +16,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Divider
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -123,7 +124,14 @@ fun AddChoreDialog(onDismiss: () -> Unit, onChoreAdd: (String) -> Unit) {
             )
         },
         confirmButton = {
-            Button(onClick = { onChoreAdd(text) }) {
+            Button(
+                onClick = {
+                    if (text.isNotBlank()) {
+                        onChoreAdd(text)
+                    }
+                },
+                enabled = text.isNotBlank()
+            ) {
                 Text(stringResource(id = R.string.add))
             }
         },
