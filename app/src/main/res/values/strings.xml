@@ -8,6 +8,7 @@
 
     <!-- Home Screen -->
     <string name="home_screen_add_chore">Add Chore</string>
+    <string name="home_screen_no_chares_found">No Chares Found</string>
 
     <!-- Chore Composables -->
     <string name="chore_completed_at">Completed at: %s</string>
@@ -27,6 +28,9 @@
     <string name="settings_screen_language_english">English</string>
     <string name="settings_screen_language_turkish">Türkçe</string>
     <string name="settings_screen_dynamic_theme">Dynamic Theme</string>
+    <string name="settings_screen_export_chares">Export Chares</string>
+    <string name="settings_screen_import_chares">Import Chares</string>
+    <string name="settings_screen_import_disclaimer">Importing data will overwrite all existing Chares.</string>
 
     <!-- About Screen -->
     <string name="about_screen_title">About Chares</string>

@@ -7,14 +7,15 @@
     <string name="confirm">Onayla</string>
 
     <!-- Home Screen -->
-    <string name="home_screen_add_chore">Görev Ekle</string>
+    <string name="home_screen_add_chore">Chares Ekle</string>
+    <string name="home_screen_no_chares_found">Chares Bulunamadı</string>
 
     <!-- Chore Composables -->
     <string name="chore_completed_at">Tamamlanma zamanı: %s</string>
-    <string name="chore_delete_chore">Görevi Sil</string>
-    <string name="chore_delete_confirmation">%s görevini silmek istediğinizden emin misiniz?</string>
-    <string name="chore_add_new_chore">Yeni bir görev ekle</string>
-    <string name="chore_title">Görev başlığı</string>
+    <string name="chore_delete_chore">Chares\'i Sil</string>
+    <string name="chore_delete_confirmation">%s Charesi silmek istediğinizden emin misiniz?</string>
+    <string name="chore_add_new_chore">Yeni bir Chares ekle</string>
+    <string name="chore_title">Chares başlığı</string>
 
     <!-- Settings Screen -->
     <string name="settings_screen_theme">Tema</string>
@@ -27,11 +28,14 @@
     <string name="settings_screen_language_english">İngilizce</string>
     <string name="settings_screen_language_turkish">Türkçe</string>
     <string name="settings_screen_dynamic_theme">Dinamik Tema</string>
+    <string name="settings_screen_export_chares">Chares Dışa Aktar</string>
+    <string name="settings_screen_import_chares">Chares İçe Aktar</string>
+    <string name="settings_screen_import_disclaimer">Verileri içe aktarmak, mevcut tüm Chareslerin üzerine yazacaktır.</string>
 
     <!-- About Screen -->
     <string name="about_screen_title">Chares Hakkında</string>
     <string name="about_screen_description">Chares, Jetpack Compose ile oluşturulmuş basit bir görev yönetimi uygulamasıdır.</string>
-    <string name="about_screen_github">GitHub Deposu</string>
+    <string name="about_screen_github">GitHub Repositoriy</string>
     <string name="about_screen_licenses">Lisanslar</string>
 
     <!-- License Screen -->
