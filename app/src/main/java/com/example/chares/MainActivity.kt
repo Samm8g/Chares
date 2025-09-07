@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         ChoreViewModelFactory((application as ChoreApplication).repository)
     }
     private val settingsViewModel: SettingsViewModel by viewModels {
-        SettingsViewModelFactory(ThemeManager(this), LanguageManager(this))
+        SettingsViewModelFactory(ThemeManager(this), LanguageManager(this), (application as ChoreApplication).repository)
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
