@@ -7,6 +7,9 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Divider
+import androidx.compose.material3.DividerDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -35,8 +38,19 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
         }
     ) {
         paddingValues ->
+        val incompleteChores = chores.filter { !it.isCompleted }
+        val completedChores = chores.filter { it.isCompleted && (it.completedAt != null && System.currentTimeMillis() - it.completedAt < 3600000) }
+
         Column(modifier = Modifier.padding(paddingValues)) {
-            ChoreList(chores = chores.filter { !it.isCompleted || (it.completedAt != null && System.currentTimeMillis() - it.completedAt < 3600000) }, onChoreCheckedChange = { chore, isChecked ->
+            ChoreList(chores = incompleteChores, onChoreCheckedChange = { chore, isChecked ->
+                viewModel.update(chore, isChecked)
+            }, showCompletionDate = true, viewModel = viewModel)
+
+            if (completedChores.isNotEmpty()) {
+                HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
+            }
+
+            ChoreList(chores = completedChores, onChoreCheckedChange = { chore, isChecked ->
                 viewModel.update(chore, isChecked)
             }, showCompletionDate = true, viewModel = viewModel)
         }
