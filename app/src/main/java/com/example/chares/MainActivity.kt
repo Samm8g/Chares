@@ -25,6 +25,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.chares.data.preferences.LanguageManager
 import com.example.chares.data.preferences.ThemeManager
@@ -49,50 +55,82 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             val theme by settingsViewModel.theme.collectAsState()
+            val dynamicTheme by settingsViewModel.dynamicTheme.collectAsState()
             val darkTheme = when (theme) {
                 "light" -> false
                 "dark" -> true
                 else -> isSystemInDarkTheme()
             }
-            CharesTheme(darkTheme = darkTheme) {
+            CharesTheme(darkTheme = darkTheme, dynamicColor = dynamicTheme) {
                 val navController = rememberNavController()
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
                     drawerContent = {
                         ModalDrawerSheet {
+                            Text(
+                                text = stringResource(R.string.app_name),
+                                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold
+                            )
                             NavigationDrawerItem(
-                                label = { Text("Home") },
-                                selected = false,
-                                onClick = { 
-                                    navController.navigate(Screen.Home.route)
+                                label = { Text(stringResource(R.string.navigation_drawer_home)) },
+                                selected = currentRoute == Screen.Home.route,
+                                onClick = {
+                                    navController.navigate(Screen.Home.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            inclusive = true
+                                        }
+                                        launchSingleTop = true
+                                    }
                                     scope.launch { drawerState.close() }
                                 }
                             )
-                            
+
                             NavigationDrawerItem(
-                                label = { Text("All History") },
-                                selected = false,
-                                onClick = { 
-                                    navController.navigate(Screen.AllHistory.route)
+                                label = { Text(stringResource(R.string.navigation_drawer_all_history)) },
+                                selected = currentRoute == Screen.AllHistory.route,
+                                onClick = {
+                                    navController.navigate(Screen.AllHistory.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
                                     scope.launch { drawerState.close() }
                                 }
                             )
                             NavigationDrawerItem(
-                                label = { Text("Settings") },
-                                selected = false,
-                                onClick = { 
-                                    navController.navigate(Screen.Settings.route)
+                                label = { Text(stringResource(R.string.navigation_drawer_settings)) },
+                                selected = currentRoute == Screen.Settings.route,
+                                onClick = {
+                                    navController.navigate(Screen.Settings.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
                                     scope.launch { drawerState.close() }
                                 }
                             )
                             NavigationDrawerItem(
-                                label = { Text("About") },
-                                selected = false,
-                                onClick = { 
-                                    navController.navigate(Screen.About.route)
+                                label = { Text(stringResource(R.string.navigation_drawer_about)) },
+                                selected = currentRoute == Screen.About.route,
+                                onClick = {
+                                    navController.navigate(Screen.About.route) {
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
                                     scope.launch { drawerState.close() }
                                 }
                             )
@@ -102,10 +140,10 @@ class MainActivity : AppCompatActivity() {
                     Scaffold(
                         topBar = {
                             TopAppBar(
-                                title = { Text("Chares") },
+                                title = { Text(stringResource(R.string.app_name)) },
                                 navigationIcon = {
                                     IconButton(onClick = { scope.launch { drawerState.open() } }) {
-                                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                                        Icon(Icons.Filled.Menu, contentDescription = stringResource(R.string.navigation_drawer_menu))
                                     }
                                 }
                             )
