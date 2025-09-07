@@ -13,6 +13,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -93,6 +94,17 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
                 }
             )
         }
-        
+        item {
+            val dynamicTheme by viewModel.dynamicTheme.collectAsState()
+            ListItem(
+                headlineContent = { Text(stringResource(id = R.string.settings_screen_dynamic_theme)) },
+                trailingContent = {
+                    Switch(
+                        checked = dynamicTheme,
+                        onCheckedChange = { viewModel.setDynamicTheme(it) }
+                    )
+                }
+            )
+        }
     }
 }
