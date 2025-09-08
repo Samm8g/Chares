@@ -8,7 +8,7 @@
 
     <!-- Home Screen -->
     <string name="home_screen_add_chore">Add Chore</string>
-    <string name="home_screen_no_chares_found">No Chares Found</string>
+    <string name="no_chares_found">No Chares Found</string>
 
     <!-- Chore Composables -->
     <string name="chore_completed_at">Completed at: %s</string>

@@ -8,7 +8,7 @@
 
     <!-- Home Screen -->
     <string name="home_screen_add_chore">Chares Ekle</string>
-    <string name="home_screen_no_chares_found">Chares Bulunamadı</string>
+    <string name="no_chares_found">Chares Bulunamadı</string>
 
     <!-- Chore Composables -->
     <string name="chore_completed_at">Tamamlanma zamanı: %s</string>
