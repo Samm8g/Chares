@@ -24,12 +24,17 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.chares.data.preferences.LanguageManager
@@ -39,6 +44,7 @@ import com.example.chares.viewmodels.ChoreViewModel
 import com.example.chares.viewmodels.ChoreViewModelFactory
 import com.example.chares.viewmodels.SettingsViewModel
 import com.example.chares.viewmodels.SettingsViewModelFactory
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -53,6 +59,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             val theme by settingsViewModel.theme.collectAsState()
             val dynamicTheme by settingsViewModel.dynamicTheme.collectAsState()
@@ -62,6 +70,13 @@ class MainActivity : AppCompatActivity() {
                 else -> isSystemInDarkTheme()
             }
             CharesTheme(darkTheme = darkTheme, dynamicColor = dynamicTheme) {
+                val systemUiController = rememberSystemUiController()
+                SideEffect {
+                    systemUiController.setSystemBarsColor(
+                        color = Color.Transparent,
+                        darkIcons = !darkTheme
+                    )
+                }
                 val navController = rememberNavController()
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
@@ -71,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                 ModalNavigationDrawer(
                     drawerState = drawerState,
                     drawerContent = {
-                        ModalDrawerSheet {
+                        ModalDrawerSheet(windowInsets = WindowInsets.systemBars) {
                             Text(
                                 text = stringResource(R.string.app_name),
                                 modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -147,15 +162,11 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 }
                             )
-                        }
+                        },
+                        contentWindowInsets = WindowInsets(0.dp)
                     ) {
                         paddingValues ->
-                        Surface(
-                            modifier = Modifier.padding(paddingValues),
-                            color = MaterialTheme.colorScheme.background
-                        ) {
-                            AppNavigation(navController = navController, choreViewModel = choreViewModel, settingsViewModel = settingsViewModel)
-                        }
+                        AppNavigation(navController = navController, choreViewModel = choreViewModel, settingsViewModel = settingsViewModel, modifier = Modifier.padding(paddingValues))
                     }
                 }
             }
