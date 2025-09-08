@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 2025-09-08
+
+### Fixed
+
+- Disabled dynamic color to prevent the status bar from turning pink in light mode.
+- Adjusted the modal navigation drawer to prevent it from overlapping with the status bar.
+
+### Added
+
+- Implemented immersive mode for an edge-to-edge display.
+- Added a "No Chores Found" message to the "All History" screen when it's empty.
+
 ## 2025-09-06
 
 ### Fixed
