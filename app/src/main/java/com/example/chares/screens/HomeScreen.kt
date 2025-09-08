@@ -51,7 +51,7 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = stringResource(id = R.string.home_screen_no_chares_found),
+                    text = stringResource(id = R.string.no_chares_found),
                     color = Color.Gray,
                     textAlign = TextAlign.Center
                 )
