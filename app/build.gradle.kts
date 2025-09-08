@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.compose.ui.text.google.fonts)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.accompanist.systemuicontroller)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
