@@ -28,7 +28,7 @@ It provides an intuitive interface for adding, tracking, and managing daily chor
 
 ## ⚠️ Known Issues
 - **Translation bug**: some UI strings may not appear localized  
-- **Package name warning**: debug builds use `com.example.chares`, which will switch to `com.samm.chares` on final release  
+- **Package name warning**: debug builds use `com.example.chares`, which will switch to `com.samm8g.chares` on final release (at dev branch)
 
 ---
 
