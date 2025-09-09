@@ -26,3 +26,11 @@
 - Initial `README.md` file.
 - Initial `CHANGELOG.md` file.
 - Initial `BUGS.md` file.
+
+## 2025-09-09
+
+### Changed
+
+- Updated application package name from `com.example.chares` to `com.samm8g.chares`.
+- Addressed Kotlinx Serialization opt-in requirement by adding `@OptIn(kotlinx.serialization.InternalSerializationApi::class)` to `Chore.kt`.
+- Migrated System UI Controller implementation from deprecated Accompanist library to `androidx.activity.enableEdgeToEdge` API, removing associated dependencies.
