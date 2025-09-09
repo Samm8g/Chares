@@ -2,8 +2,10 @@ package com.example.chares.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.Serializable
 
+@OptIn(InternalSerializationApi::class)
 @Serializable
 @Entity(tableName = "chores")
 data class Chore(
