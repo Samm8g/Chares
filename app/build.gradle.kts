@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.chares"
+    namespace = "com.samm8g.chares"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.chares"
+        applicationId = "com.samm8g.chares"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
