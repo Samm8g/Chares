@@ -28,7 +28,7 @@ import com.example.chares.Screen
 @Composable
 fun AboutScreen(navController: NavController) {
     val context = LocalContext.current
-    val githubUrl = "https://github.com/Samm8g/Chares" // TODO: Replace with actual GitHub repo
+    val githubUrl = "https://github.com/Samm8g/Chares"
 
     Column(
         modifier = Modifier
