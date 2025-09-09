@@ -5,9 +5,6 @@ import com.example.chares.data.ChoreDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.decodeFromString
-import java.io.File
 
 class ChoreRepository(private val choreDao: ChoreDao) {
     val allChores: Flow<List<Chore>> = choreDao.getAllChores()
