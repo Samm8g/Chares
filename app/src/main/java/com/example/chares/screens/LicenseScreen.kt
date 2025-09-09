@@ -31,7 +31,7 @@ fun LicenseScreen(navController: NavController) {
         LicenseInfo(
             stringResource(id = R.string.app_name),
             "GNU General Public License v3.0",
-            "https://github.com/Samm8g/Chaers/LICENSE"
+            "https://github.com/Samm8g/Chares/LICENSE"
         ),
         LicenseInfo(
             "AndroidX Libraries",
