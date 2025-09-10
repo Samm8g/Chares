@@ -28,6 +28,7 @@
     <string name="settings_screen_language_english">English</string>
     <string name="settings_screen_language_turkish">Türkçe</string>
     <string name="settings_screen_dynamic_theme">Dynamic Theme</string>
+    <string name="settings_screen_haptic_feedback">Haptic Feedback</string>
     <string name="settings_screen_export_chares">Export Chares</string>
     <string name="settings_screen_import_chares">Import Chares</string>
     <string name="settings_screen_import_disclaimer">Importing data will overwrite all existing Chares.</string>
