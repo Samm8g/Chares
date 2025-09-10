@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.samm8g.chares.AppNavigation
 import com.samm8g.chares.data.preferences.HapticManager
 import com.samm8g.chares.data.preferences.LanguageManager
 import com.samm8g.chares.data.preferences.ThemeManager
@@ -183,11 +184,3 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-sealed class Screen(val route: String) {
-    object Home : Screen("home")
-    object AddChore : Screen("add_chore")
-    object AllHistory : Screen("all_history")
-    object Settings : Screen("settings")
-    object About : Screen("about")
-    object License : Screen("license")
-}

@@ -44,21 +44,22 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ChoreList(chores: List<Chore>, onChoreCheckedChange: (Chore, Boolean) -> Unit, showCompletionDate: Boolean = false, viewModel: ChoreViewModel) {
+fun ChoreList(chores: List<Chore>, onChoreCheckedChange: (Chore, Boolean) -> Unit, showCompletionDate: Boolean = false, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel) {
     LazyColumn {
-        items(chores) {
+        items(chores, key = { it.id }) {
             chore ->
             ChoreItem(chore = chore, onCheckedChange = { isChecked ->
                 onChoreCheckedChange(chore, isChecked)
-            }, showCompletionDate = showCompletionDate, viewModel = viewModel)
+            }, showCompletionDate = showCompletionDate, viewModel = viewModel, settingsViewModel = settingsViewModel, modifier = if (settingsViewModel.animationsEnabled.collectAsState().value) Modifier.animateItemPlacement() else Modifier)
         }
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDate: Boolean, viewModel: ChoreViewModel) {
+fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDate: Boolean, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel, modifier: Modifier = Modifier) {
     var showDeleteConfirmationDialog by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
     val context = LocalContext.current
@@ -74,7 +75,7 @@ fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDa
     val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
 
 
-    Card(modifier = Modifier
+    Card(modifier = modifier
         .fillMaxWidth()
         .padding(8.dp)
         .defaultMinSize(minHeight = 72.dp)

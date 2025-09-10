@@ -50,6 +50,12 @@ class SettingsViewModel(
         initialValue = true
     )
 
+    val animationsEnabled: StateFlow<Boolean> = hapticManager.animationsEnabled.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = true
+    )
+
     fun setTheme(theme: String) {
         viewModelScope.launch {
             val themeValue = when (theme) {
@@ -76,6 +82,12 @@ class SettingsViewModel(
     fun setHapticFeedback(isHapticFeedbackEnabled: Boolean) {
         viewModelScope.launch {
             hapticManager.setHapticFeedback(isHapticFeedbackEnabled)
+        }
+    }
+
+    fun setAnimationsEnabled(areAnimationsEnabled: Boolean) {
+        viewModelScope.launch {
+            hapticManager.setAnimationsEnabled(areAnimationsEnabled)
         }
     }
 

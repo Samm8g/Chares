@@ -87,7 +87,7 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
             Column(modifier = Modifier.padding(paddingValues)) {
                 ChoreList(chores = incompleteChores, onChoreCheckedChange = { chore, isChecked ->
                     viewModel.update(chore, isChecked)
-                }, showCompletionDate = true, viewModel = viewModel)
+                }, showCompletionDate = true, viewModel = viewModel, settingsViewModel = settingsViewModel)
 
                 if (completedChores.isNotEmpty()) {
                     HorizontalDivider()
@@ -95,7 +95,7 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
 
                 ChoreList(chores = completedChores, onChoreCheckedChange = { chore, isChecked ->
                     viewModel.update(chore, isChecked)
-                }, showCompletionDate = true, viewModel = viewModel)
+                }, showCompletionDate = true, viewModel = viewModel, settingsViewModel = settingsViewModel)
             }
         }
     }
