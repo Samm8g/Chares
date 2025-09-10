@@ -24,6 +24,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.samm8g.chares.data.preferences.HapticManager
 import com.samm8g.chares.data.preferences.LanguageManager
 import com.samm8g.chares.data.preferences.ThemeManager
 import com.samm8g.chares.ui.theme.CharesTheme
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         ChoreViewModelFactory((application as ChoreApplication).repository)
     }
     private val settingsViewModel: SettingsViewModel by viewModels {
-        SettingsViewModelFactory(ThemeManager(this), LanguageManager(this), (application as ChoreApplication).repository)
+        SettingsViewModelFactory(ThemeManager(this), LanguageManager(this), HapticManager(this), (application as ChoreApplication).repository)
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -69,6 +72,8 @@ class MainActivity : AppCompatActivity() {
                 val scope = rememberCoroutineScope()
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
+                val haptic = LocalHapticFeedback.current
+                val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
@@ -84,6 +89,9 @@ class MainActivity : AppCompatActivity() {
                                 label = { Text(stringResource(R.string.navigation_drawer_home)) },
                                 selected = currentRoute == Screen.Home.route,
                                 onClick = {
+                                    if (hapticFeedback) {
+                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    }
                                     navController.navigate(Screen.Home.route) {
                                         popUpTo(navController.graph.startDestinationId) {
                                             inclusive = true
@@ -98,6 +106,9 @@ class MainActivity : AppCompatActivity() {
                                 label = { Text(stringResource(R.string.navigation_drawer_all_history)) },
                                 selected = currentRoute == Screen.AllHistory.route,
                                 onClick = {
+                                    if (hapticFeedback) {
+                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    }
                                     navController.navigate(Screen.AllHistory.route) {
                                         popUpTo(navController.graph.startDestinationId) {
                                             saveState = true
@@ -112,6 +123,9 @@ class MainActivity : AppCompatActivity() {
                                 label = { Text(stringResource(R.string.navigation_drawer_settings)) },
                                 selected = currentRoute == Screen.Settings.route,
                                 onClick = {
+                                    if (hapticFeedback) {
+                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    }
                                     navController.navigate(Screen.Settings.route) {
                                         popUpTo(navController.graph.startDestinationId) {
                                             saveState = true
@@ -126,6 +140,9 @@ class MainActivity : AppCompatActivity() {
                                 label = { Text(stringResource(R.string.navigation_drawer_about)) },
                                 selected = currentRoute == Screen.About.route,
                                 onClick = {
+                                    if (hapticFeedback) {
+                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    }
                                     navController.navigate(Screen.About.route) {
                                         popUpTo(navController.graph.startDestinationId) {
                                             saveState = true
@@ -144,7 +161,12 @@ class MainActivity : AppCompatActivity() {
                             TopAppBar(
                                 title = { Text(stringResource(R.string.app_name)) },
                                 navigationIcon = {
-                                    IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                                    IconButton(onClick = { 
+                                        if (hapticFeedback) {
+                                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                        }
+                                        scope.launch { drawerState.open() } 
+                                    }) {
                                         Icon(Icons.Filled.Menu, contentDescription = stringResource(R.string.navigation_drawer_menu))
                                     }
                                 }

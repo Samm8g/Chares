@@ -18,17 +18,28 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.samm8g.chares.ChoreApplication
 import com.samm8g.chares.R
 import com.samm8g.chares.data.Chore
+import com.samm8g.chares.data.preferences.HapticManager
+import com.samm8g.chares.data.preferences.LanguageManager
+import com.samm8g.chares.data.preferences.ThemeManager
 import com.samm8g.chares.viewmodels.ChoreViewModel
+import com.samm8g.chares.viewmodels.SettingsViewModel
+import com.samm8g.chares.viewmodels.SettingsViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -49,14 +60,37 @@ fun ChoreList(chores: List<Chore>, onChoreCheckedChange: (Chore, Boolean) -> Uni
 @Composable
 fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDate: Boolean, viewModel: ChoreViewModel) {
     var showDeleteConfirmationDialog by remember { mutableStateOf(false) }
+    val haptic = LocalHapticFeedback.current
+    val context = LocalContext.current
+    val application = context.applicationContext as ChoreApplication
+    val settingsViewModel: SettingsViewModel = viewModel(
+        factory = SettingsViewModelFactory(
+            ThemeManager(context),
+            LanguageManager(context),
+            HapticManager(context),
+            application.repository
+        )
+    )
+    val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
+
 
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(8.dp)
         .defaultMinSize(minHeight = 72.dp)
         .combinedClickable(
-            onClick = { onCheckedChange(!chore.isCompleted) },
-            onLongClick = { showDeleteConfirmationDialog = true }
+            onClick = { 
+                if (hapticFeedback) {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                }
+                onCheckedChange(!chore.isCompleted) 
+            },
+            onLongClick = { 
+                if (hapticFeedback) {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                }
+                showDeleteConfirmationDialog = true
+            }
         )
     )
     {
@@ -85,6 +119,9 @@ fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDa
             text = { Text(text = stringResource(id = R.string.chore_delete_confirmation, chore.title)) },
             confirmButton = {
                 TextButton(onClick = {
+                    if (hapticFeedback) {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    }
                     viewModel.delete(chore)
                     showDeleteConfirmationDialog = false
                 }) {
@@ -92,7 +129,12 @@ fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDa
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteConfirmationDialog = false }) {
+                TextButton(onClick = { 
+                    if (hapticFeedback) {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    }
+                    showDeleteConfirmationDialog = false 
+                }) {
                     Text(stringResource(id = R.string.cancel))
                 }
             }
@@ -103,6 +145,18 @@ fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDa
 @Composable
 fun AddChoreDialog(onDismiss: () -> Unit, onChoreAdd: (String) -> Unit) {
     var text by remember { mutableStateOf("") }
+    val haptic = LocalHapticFeedback.current
+    val context = LocalContext.current
+    val application = context.applicationContext as ChoreApplication
+    val settingsViewModel: SettingsViewModel = viewModel(
+        factory = SettingsViewModelFactory(
+            ThemeManager(context),
+            LanguageManager(context),
+            HapticManager(context),
+            application.repository
+        )
+    )
+    val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -117,6 +171,9 @@ fun AddChoreDialog(onDismiss: () -> Unit, onChoreAdd: (String) -> Unit) {
         confirmButton = {
             Button(
                 onClick = {
+                    if (hapticFeedback) {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    }
                     if (text.isNotBlank()) {
                         onChoreAdd(text)
                     }
@@ -127,7 +184,12 @@ fun AddChoreDialog(onDismiss: () -> Unit, onChoreAdd: (String) -> Unit) {
             }
         },
         dismissButton = {
-            Button(onClick = onDismiss) {
+            Button(onClick = { 
+                if (hapticFeedback) {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                }
+                onDismiss() 
+            }) {
                 Text(stringResource(id = R.string.cancel))
             }
         }
