@@ -183,5 +183,17 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
                 }
             )
         }
+        item {
+            val animationsEnabled by viewModel.animationsEnabled.collectAsState()
+            ListItem(
+                headlineContent = { Text(stringResource(id = R.string.settings_screen_animations)) },
+                trailingContent = {
+                    Switch(
+                        checked = animationsEnabled,
+                        onCheckedChange = { viewModel.setAnimationsEnabled(it) }
+                    )
+                }
+            )
+        }
     }
 }
