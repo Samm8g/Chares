@@ -39,6 +39,7 @@ TODO: Add Screenshots
 - **Translation bug**: some UI strings may not appear localized or break upon changing language
 
 ## 🚀 Installation
+## 🚀 Building
 
 ### Requirements
 - JDK 17+
