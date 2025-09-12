@@ -6,7 +6,7 @@ It provides an intuitive interface for adding, tracking, and managing daily chor
 
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/Ssmm8g/Chares)
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](https://opensource.org/licenses/GPL-3.0)
-[![Version](https://img.shields.io/badge/version-1.1.0-yellow.svg)](https://github.com/Damm8g/Chares/releases/latest)
+[![Version](https://img.shields.io/badge/version-1.1.0-yellow.svg)](https://github.com/Samm8g/Chares/releases/latest)
 
 ## 📷 Screenshots
 TODO: Add Screenshots 
@@ -34,6 +34,7 @@ TODO: Add Screenshots
 - **Localization Improvements**: More robust language support
 - **Welcome Screen**: Guide for first-time users
 - **Animations**: Smooth transitions between tabs and lists (feature/animations)
+- **Chore Editing**: Ability to edit existing chore details
 
 ## ⚠️ Known Issues
 - **Translation bug**: some UI strings may not appear localized or break upon changing language
