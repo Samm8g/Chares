@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## 2025-09-12
+
+### Added
+
+- **Configurable Completed Chore Display Duration:** Introduced a new setting to allow users to customize how long completed chores remain visible on the home screen (e.g., 1 hour, 24 hours, 7 days, never).
+- **Chore Editing Feature Placeholder:** Added "Chore Editing" to the "Upcoming Features" section in `README.md`.
+
+### Changed
+
+- **Refactored SettingsViewModel Usage:** Centralized `SettingsViewModel` instantiation in `MainActivity.kt` and passed it down the composable hierarchy, improving efficiency and consistency.
+- **Implemented Chore Loading Indicator:** Added a `CircularProgressIndicator` to `HomeScreen.kt` to provide visual feedback while chores are being loaded.
+
+### Fixed
+
+- **Compilation Errors in SettingsScreen.kt and AllHistoryScreen.kt:** Resolved type inference and unresolved reference errors related to `CompletedChoreDisplayManager` and `SettingsViewModel` instantiation.
+- **Dynamic TopAppBar Titles:** Implemented dynamic titles for the `TopAppBar` based on the current navigation route.
+
+---
+
+## 2025-09-11
+
+### Changed
+
+- **Animation Feature Completion:** Finalized the implementation and integration of animation controls and transitions, ensuring smooth user experience across the application.
+
+---
+
 ## 2025-09-10
 
 ### Added
