@@ -36,7 +36,7 @@ fun AppNavigation(navController: NavHostController, choreViewModel: ChoreViewMod
         popExitTransition = { if (animationsEnabled) slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(500)) + fadeOut(animationSpec = tween(500)) else ExitTransition.None }
     ) {
         composable(Screen.Home.route) {
-            HomeScreen(navController = navController, viewModel = choreViewModel)
+            HomeScreen(navController = navController, viewModel = choreViewModel, settingsViewModel = settingsViewModel)
         }
         composable(Screen.Settings.route) {
             SettingsScreen(navController = navController, viewModel = settingsViewModel)

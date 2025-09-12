@@ -62,16 +62,6 @@ fun ChoreList(chores: List<Chore>, onChoreCheckedChange: (Chore, Boolean) -> Uni
 fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDate: Boolean, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel, modifier: Modifier = Modifier) {
     var showDeleteConfirmationDialog by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
-    val context = LocalContext.current
-    val application = context.applicationContext as ChoreApplication
-    val settingsViewModel: SettingsViewModel = viewModel(
-        factory = SettingsViewModelFactory(
-            ThemeManager(context),
-            LanguageManager(context),
-            HapticManager(context),
-            application.repository
-        )
-    )
     val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
 
 
@@ -144,19 +134,9 @@ fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDa
 }
 
 @Composable
-fun AddChoreDialog(onDismiss: () -> Unit, onChoreAdd: (String) -> Unit) {
+fun AddChoreDialog(onDismiss: () -> Unit, onChoreAdd: (String) -> Unit, settingsViewModel: SettingsViewModel) {
     var text by remember { mutableStateOf("") }
     val haptic = LocalHapticFeedback.current
-    val context = LocalContext.current
-    val application = context.applicationContext as ChoreApplication
-    val settingsViewModel: SettingsViewModel = viewModel(
-        factory = SettingsViewModelFactory(
-            ThemeManager(context),
-            LanguageManager(context),
-            HapticManager(context),
-            application.repository
-        )
-    )
     val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
 
     AlertDialog(

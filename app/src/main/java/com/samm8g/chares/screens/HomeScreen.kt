@@ -40,20 +40,10 @@ import com.samm8g.chares.viewmodels.SettingsViewModel
 import com.samm8g.chares.viewmodels.SettingsViewModelFactory
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
+fun HomeScreen(navController: NavController, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel) {
     val chores by viewModel.allChores.collectAsState(initial = emptyList())
     var showDialog by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
-    val context = LocalContext.current
-    val application = context.applicationContext as ChoreApplication
-    val settingsViewModel: SettingsViewModel = viewModel(
-        factory = SettingsViewModelFactory(
-            ThemeManager(context),
-            LanguageManager(context),
-            HapticManager(context),
-            application.repository
-        )
-    )
     val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
 
     Scaffold(
@@ -104,6 +94,6 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
         AddChoreDialog(onDismiss = { showDialog = false }, onChoreAdd = { title ->
             viewModel.insert(Chore(title = title))
             showDialog = false
-        })
+        }, settingsViewModel = settingsViewModel)
     }
 }
