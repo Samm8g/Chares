@@ -55,4 +55,9 @@
     <string name="screen_title_all_history">Tüm Geçmiş</string>
     <string name="screen_title_about">Hakkında</string>
     <string name="screen_title_license">Lisanslar</string>
+    <string name="settings_screen_completed_chore_display_duration">Bitirilen Chare Gözükme Süresi</string>
+    <string name="settings_screen_duration_1_hour">1 Saat</string>
+    <string name="settings_screen_duration_24_hours">24 Saat</string>
+    <string name="settings_screen_duration_7_days">7 Gün</string>
+    <string name="settings_screen_duration_never">Hiçbir Zaman</string>
 </resources>

@@ -57,4 +57,11 @@
     <string name="screen_title_all_history">All History</string>
     <string name="screen_title_about">About</string>
     <string name="screen_title_license">Licenses</string>
+
+    <!-- Completed Chore Display Duration -->
+    <string name="settings_screen_completed_chore_display_duration">Completed Chare Display Duration</string>
+    <string name="settings_screen_duration_1_hour">1 Hour</string>
+    <string name="settings_screen_duration_24_hours">24 Hours</string>
+    <string name="settings_screen_duration_7_days">7 Days</string>
+    <string name="settings_screen_duration_never">Never</string>
 </resources>

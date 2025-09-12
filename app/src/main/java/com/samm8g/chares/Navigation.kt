@@ -42,7 +42,7 @@ fun AppNavigation(navController: NavHostController, choreViewModel: ChoreViewMod
             SettingsScreen(navController = navController, viewModel = settingsViewModel)
         }
         composable(Screen.AllHistory.route) {
-            AllHistoryScreen(navController = navController, viewModel = choreViewModel)
+            AllHistoryScreen(navController = navController, viewModel = choreViewModel, settingsViewModel = settingsViewModel)
         }
         
         composable(Screen.About.route) {

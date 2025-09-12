@@ -1,6 +1,7 @@
 
 package com.samm8g.chares.screens
 
+import com.samm8g.chares.data.preferences.CompletedChoreDisplayManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -192,6 +193,42 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
                         checked = animationsEnabled,
                         onCheckedChange = { viewModel.setAnimationsEnabled(it) }
                     )
+                }
+            )
+        }
+        item {
+            val completedChoreDisplayDuration by viewModel.completedChoreDisplayDuration.collectAsState()
+            var expanded by remember { mutableStateOf(false) }
+            val options = listOf(
+                CompletedChoreDisplayManager.ONE_HOUR_IN_MILLIS to stringResource(id = R.string.settings_screen_duration_1_hour),
+                CompletedChoreDisplayManager.TWENTY_FOUR_HOURS_IN_MILLIS to stringResource(id = R.string.settings_screen_duration_24_hours),
+                CompletedChoreDisplayManager.SEVEN_DAYS_IN_MILLIS to stringResource(id = R.string.settings_screen_duration_7_days),
+                CompletedChoreDisplayManager.NEVER_IN_MILLIS to stringResource(id = R.string.settings_screen_duration_never)
+            )
+            val (selectedDurationMillis, selectedDurationText) = options.first { it.first == completedChoreDisplayDuration } as Pair<Long, String>
+
+            ListItem(
+                headlineContent = { Text(stringResource(id = R.string.settings_screen_completed_chore_display_duration)) },
+                trailingContent = {
+                    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+                        TextField(
+                            value = selectedDurationText,
+                            onValueChange = {},
+                            readOnly = true,
+                            trailingIcon = {
+                                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                            },
+                            modifier = Modifier.menuAnchor()
+                        )
+                        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+                            options.forEach { (durationMillis, durationText) ->
+                                DropdownMenuItem(text = { Text(durationText) }, onClick = {
+                                    viewModel.setCompletedChoreDisplayDuration(durationMillis)
+                                    expanded = false
+                                })
+                            }
+                        }
+                    }
                 }
             )
         }

@@ -26,18 +26,8 @@ import com.samm8g.chares.viewmodels.SettingsViewModel
 import com.samm8g.chares.viewmodels.SettingsViewModelFactory
 
 @Composable
-fun AllHistoryScreen(navController: NavController, viewModel: ChoreViewModel) {
+fun AllHistoryScreen(navController: NavController, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel) {
     val chores by viewModel.allChores.collectAsState(initial = emptyList())
-    val context = LocalContext.current
-    val application = context.applicationContext as ChoreApplication
-    val settingsViewModel: SettingsViewModel = viewModel(
-        factory = SettingsViewModelFactory(
-            ThemeManager(context),
-            LanguageManager(context),
-            HapticManager(context),
-            application.repository
-        )
-    )
 
     if (chores.isEmpty()) {
         Box(

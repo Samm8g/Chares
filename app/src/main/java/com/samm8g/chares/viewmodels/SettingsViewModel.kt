@@ -3,6 +3,7 @@ package com.samm8g.chares.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.samm8g.chares.data.preferences.CompletedChoreDisplayManager
 import com.samm8g.chares.data.preferences.HapticManager
 import com.samm8g.chares.data.preferences.LanguageManager
 import com.samm8g.chares.data.preferences.ThemeManager
@@ -17,6 +18,7 @@ class SettingsViewModel(
     private val themeManager: ThemeManager,
     private val languageManager: LanguageManager,
     private val hapticManager: HapticManager,
+    private val completedChoreDisplayManager: CompletedChoreDisplayManager,
     private val choreRepository: ChoreRepository
 ) : ViewModel() {
 
@@ -56,6 +58,12 @@ class SettingsViewModel(
         initialValue = true
     )
 
+    val completedChoreDisplayDuration: StateFlow<Long> = completedChoreDisplayManager.completedChoreDisplayDuration.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = CompletedChoreDisplayManager.ONE_HOUR_IN_MILLIS
+    )
+
     fun setTheme(theme: String) {
         viewModelScope.launch {
             val themeValue = when (theme) {
@@ -91,6 +99,12 @@ class SettingsViewModel(
         }
     }
 
+    fun setCompletedChoreDisplayDuration(duration: Long) {
+        viewModelScope.launch {
+            completedChoreDisplayManager.setCompletedChoreDisplayDuration(duration)
+        }
+    }
+
     suspend fun exportChoreData(): String {
         return choreRepository.exportChoreData()
     }
@@ -104,12 +118,13 @@ class SettingsViewModelFactory(
     private val themeManager: ThemeManager,
     private val languageManager: LanguageManager,
     private val hapticManager: HapticManager,
+    private val completedChoreDisplayManager: CompletedChoreDisplayManager,
     private val choreRepository: ChoreRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SettingsViewModel(themeManager, languageManager, hapticManager, choreRepository) as T
+            return SettingsViewModel(themeManager, languageManager, hapticManager, completedChoreDisplayManager, choreRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

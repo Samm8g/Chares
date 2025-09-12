@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.samm8g.chares.AppNavigation
+import com.samm8g.chares.data.preferences.CompletedChoreDisplayManager
 import com.samm8g.chares.data.preferences.HapticManager
 import com.samm8g.chares.data.preferences.LanguageManager
 import com.samm8g.chares.data.preferences.ThemeManager
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         ChoreViewModelFactory((application as ChoreApplication).repository)
     }
     private val settingsViewModel: SettingsViewModel by viewModels {
-        SettingsViewModelFactory(ThemeManager(this), LanguageManager(this), HapticManager(this), (application as ChoreApplication).repository)
+        SettingsViewModelFactory(ThemeManager(this), LanguageManager(this), HapticManager(this), CompletedChoreDisplayManager(this), (application as ChoreApplication).repository)
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

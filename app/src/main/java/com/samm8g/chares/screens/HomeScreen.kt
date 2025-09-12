@@ -1,5 +1,6 @@
 package com.samm8g.chares.screens
 
+import com.samm8g.chares.data.preferences.CompletedChoreDisplayManager
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -45,6 +46,7 @@ import com.samm8g.chares.viewmodels.SettingsViewModelFactory
 fun HomeScreen(navController: NavController, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel) {
     val chores by viewModel.allChores.collectAsState(initial = emptyList())
     val isLoading by viewModel.isLoading.collectAsState()
+    val completedChoreDisplayDuration by settingsViewModel.completedChoreDisplayDuration.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
     val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
@@ -71,7 +73,11 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel, settings
             }
         } else {
             val incompleteChores = chores.filter { !it.isCompleted }
-            val completedChores = chores.filter { it.isCompleted && (it.completedAt != null && System.currentTimeMillis() - it.completedAt < 3600000) }
+            val completedChores = chores.filter { 
+                it.isCompleted && (it.completedAt != null &&
+                        (completedChoreDisplayDuration == CompletedChoreDisplayManager.NEVER_IN_MILLIS ||
+                                System.currentTimeMillis() - it.completedAt < completedChoreDisplayDuration))
+            }
 
             if (incompleteChores.isEmpty() && completedChores.isEmpty()) {
                 Box(
