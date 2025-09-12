@@ -4,19 +4,20 @@
 **Chares** is a simple Android application built with **Jetpack Compose** to help users manage chores and tasks.
 It provides an intuitive interface for adding, tracking, and managing daily chores, with localization support.
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://example.com)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/Ssmm8g/Chares)
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](https://opensource.org/licenses/GPL-3.0)
-[![Version](https://img.shields.io/badge/version-1.1.0-yellow.svg)](https://example.com)
+[![Version](https://img.shields.io/badge/version-1.1.0-yellow.svg)](https://github.com/Damm8g/Chares/releases/latest)
 
 ## 📷 Screenshots
+TODO: Add Screenshots 
 
 ![Home Screen](.github/screenshots/home_screen.png)
-![Home Screen](.github/screenshots/home_screen_fixed.png)
-![Home Screen](.github/screenshots/home_screen_dark.png)
+![Home Screen Fixed](.github/screenshots/home_screen_fixed.png)
+![Home Screen Dark](.github/screenshots/home_screen_dark.png)
 
-![Home Screen](.github/screenshots/all_history_screen.png)
-![Home Screen](.github/screenshots/add_chore_screen.png)
-![Home Screen](.github/screenshots/confirm_delete_screen.png)
+![All History](.github/screenshots/all_history_screen.png)
+![Add Chare](.github/screenshots/add_chare_screen.png)
+![Confirm Delete](.github/screenshots/confirm_delete_screen.png)
 
 ## ✨ Features
 - ✅ Chore management
@@ -35,7 +36,7 @@ It provides an intuitive interface for adding, tracking, and managing daily chor
 - **Animations**: Smooth transitions between tabs and lists (feature/animations)
 
 ## ⚠️ Known Issues
-- **Translation bug**: some UI strings may not appear localized or bug upon changing language
+- **Translation bug**: some UI strings may not appear localized or break upon changing language
 
 ## 🚀 Installation
 
