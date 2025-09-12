@@ -28,6 +28,8 @@
     <string name="settings_screen_language_english">İngilizce</string>
     <string name="settings_screen_language_turkish">Türkçe</string>
     <string name="settings_screen_dynamic_theme">Dinamik Tema</string>
+    <string name="settings_screen_haptic_feedback">Dokunsal Geri Bildirim</string>
+    <string name="settings_screen_animations">Animasyonlar</string>
     <string name="settings_screen_export_chares">Chares Dışa Aktar</string>
     <string name="settings_screen_import_chares">Chares İçe Aktar</string>
     <string name="settings_screen_import_disclaimer">Verileri içe aktarmak, mevcut tüm Chareslerin üzerine yazacaktır.</string>

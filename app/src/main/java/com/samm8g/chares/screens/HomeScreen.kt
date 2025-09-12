@@ -20,23 +20,40 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.samm8g.chares.ChoreApplication
 import com.samm8g.chares.R
 import com.samm8g.chares.composables.AddChoreDialog
 import com.samm8g.chares.composables.ChoreList
 import com.samm8g.chares.data.Chore
+import com.samm8g.chares.data.preferences.HapticManager
+import com.samm8g.chares.data.preferences.LanguageManager
+import com.samm8g.chares.data.preferences.ThemeManager
 import com.samm8g.chares.viewmodels.ChoreViewModel
+import com.samm8g.chares.viewmodels.SettingsViewModel
+import com.samm8g.chares.viewmodels.SettingsViewModelFactory
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
+fun HomeScreen(navController: NavController, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel) {
     val chores by viewModel.allChores.collectAsState(initial = emptyList())
     var showDialog by remember { mutableStateOf(false) }
+    val haptic = LocalHapticFeedback.current
+    val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { showDialog = true }) {
+            FloatingActionButton(onClick = { 
+                if (hapticFeedback) {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                }
+                showDialog = true 
+            }) {
                 Icon(Icons.Filled.Add, contentDescription = stringResource(id = R.string.home_screen_add_chore))
             }
         }
@@ -60,7 +77,7 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
             Column(modifier = Modifier.padding(paddingValues)) {
                 ChoreList(chores = incompleteChores, onChoreCheckedChange = { chore, isChecked ->
                     viewModel.update(chore, isChecked)
-                }, showCompletionDate = true, viewModel = viewModel)
+                }, showCompletionDate = true, viewModel = viewModel, settingsViewModel = settingsViewModel)
 
                 if (completedChores.isNotEmpty()) {
                     HorizontalDivider()
@@ -68,7 +85,7 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
 
                 ChoreList(chores = completedChores, onChoreCheckedChange = { chore, isChecked ->
                     viewModel.update(chore, isChecked)
-                }, showCompletionDate = true, viewModel = viewModel)
+                }, showCompletionDate = true, viewModel = viewModel, settingsViewModel = settingsViewModel)
             }
         }
     }
@@ -77,6 +94,6 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel) {
         AddChoreDialog(onDismiss = { showDialog = false }, onChoreAdd = { title ->
             viewModel.insert(Chore(title = title))
             showDialog = false
-        })
+        }, settingsViewModel = settingsViewModel)
     }
 }

@@ -3,6 +3,7 @@ package com.samm8g.chares.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.samm8g.chares.data.preferences.HapticManager
 import com.samm8g.chares.data.preferences.LanguageManager
 import com.samm8g.chares.data.preferences.ThemeManager
 import com.samm8g.chares.repositories.ChoreRepository
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     private val themeManager: ThemeManager,
     private val languageManager: LanguageManager,
+    private val hapticManager: HapticManager,
     private val choreRepository: ChoreRepository
 ) : ViewModel() {
 
@@ -37,6 +39,18 @@ class SettingsViewModel(
     )
 
     val dynamicTheme: StateFlow<Boolean> = themeManager.dynamicTheme.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = true
+    )
+
+    val hapticFeedback: StateFlow<Boolean> = hapticManager.hapticFeedback.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = true
+    )
+
+    val animationsEnabled: StateFlow<Boolean> = hapticManager.animationsEnabled.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = true
@@ -65,6 +79,18 @@ class SettingsViewModel(
         }
     }
 
+    fun setHapticFeedback(isHapticFeedbackEnabled: Boolean) {
+        viewModelScope.launch {
+            hapticManager.setHapticFeedback(isHapticFeedbackEnabled)
+        }
+    }
+
+    fun setAnimationsEnabled(areAnimationsEnabled: Boolean) {
+        viewModelScope.launch {
+            hapticManager.setAnimationsEnabled(areAnimationsEnabled)
+        }
+    }
+
     suspend fun exportChoreData(): String {
         return choreRepository.exportChoreData()
     }
@@ -77,12 +103,13 @@ class SettingsViewModel(
 class SettingsViewModelFactory(
     private val themeManager: ThemeManager,
     private val languageManager: LanguageManager,
+    private val hapticManager: HapticManager,
     private val choreRepository: ChoreRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SettingsViewModel(themeManager, languageManager, choreRepository) as T
+            return SettingsViewModel(themeManager, languageManager, hapticManager, choreRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

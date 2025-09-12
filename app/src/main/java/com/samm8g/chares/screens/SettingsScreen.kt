@@ -171,5 +171,29 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
                 }
             )
         }
+        item {
+            val hapticFeedback by viewModel.hapticFeedback.collectAsState()
+            ListItem(
+                headlineContent = { Text(stringResource(id = R.string.settings_screen_haptic_feedback)) },
+                trailingContent = {
+                    Switch(
+                        checked = hapticFeedback,
+                        onCheckedChange = { viewModel.setHapticFeedback(it) }
+                    )
+                }
+            )
+        }
+        item {
+            val animationsEnabled by viewModel.animationsEnabled.collectAsState()
+            ListItem(
+                headlineContent = { Text(stringResource(id = R.string.settings_screen_animations)) },
+                trailingContent = {
+                    Switch(
+                        checked = animationsEnabled,
+                        onCheckedChange = { viewModel.setAnimationsEnabled(it) }
+                    )
+                }
+            )
+        }
     }
 }
