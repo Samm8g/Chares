@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.StringRes
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
@@ -160,7 +161,7 @@ class MainActivity : AppCompatActivity() {
                     Scaffold(
                         topBar = {
                             TopAppBar(
-                                title = { Text(stringResource(R.string.app_name)) },
+                                title = { Text(stringResource(getTitleResId(currentRoute))) },
                                 navigationIcon = {
                                     IconButton(onClick = { 
                                         if (hapticFeedback) {
@@ -180,6 +181,18 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    @StringRes
+    private fun getTitleResId(currentRoute: String?): Int {
+        return when (currentRoute) {
+            Screen.Home.route -> R.string.screen_title_home
+            Screen.Settings.route -> R.string.screen_title_settings
+            Screen.AllHistory.route -> R.string.screen_title_all_history
+            Screen.About.route -> R.string.screen_title_about
+            Screen.License.route -> R.string.screen_title_license
+            else -> R.string.app_name // Default title
         }
     }
 }

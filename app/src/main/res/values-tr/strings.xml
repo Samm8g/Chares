@@ -50,4 +50,9 @@
     <string name="navigation_drawer_settings">Ayarlar</string>
     <string name="navigation_drawer_about">Hakkında</string>
     <string name="navigation_drawer_menu">Menü</string>
+    <string name="screen_title_home">Ana Sayfa</string>
+    <string name="screen_title_settings">Ayarlar</string>
+    <string name="screen_title_all_history">Tüm Geçmiş</string>
+    <string name="screen_title_about">Hakkında</string>
+    <string name="screen_title_license">Lisanslar</string>
 </resources>
