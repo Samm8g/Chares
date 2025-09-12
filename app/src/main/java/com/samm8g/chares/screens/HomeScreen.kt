@@ -1,5 +1,7 @@
 package com.samm8g.chares.screens
 
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,6 +44,7 @@ import com.samm8g.chares.viewmodels.SettingsViewModelFactory
 @Composable
 fun HomeScreen(navController: NavController, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel) {
     val chores by viewModel.allChores.collectAsState(initial = emptyList())
+    val isLoading by viewModel.isLoading.collectAsState()
     var showDialog by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
     val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
@@ -59,33 +62,42 @@ fun HomeScreen(navController: NavController, viewModel: ChoreViewModel, settings
         }
     ) {
         paddingValues ->
-        val incompleteChores = chores.filter { !it.isCompleted }
-        val completedChores = chores.filter { it.isCompleted && (it.completedAt != null && System.currentTimeMillis() - it.completedAt < 3600000) }
-
-        if (incompleteChores.isEmpty() && completedChores.isEmpty()) {
+        if (isLoading) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    text = stringResource(id = R.string.no_chares_found),
-                    color = Color.Gray,
-                    textAlign = TextAlign.Center
-                )
+                CircularProgressIndicator()
             }
         } else {
-            Column(modifier = Modifier.padding(paddingValues)) {
-                ChoreList(chores = incompleteChores, onChoreCheckedChange = { chore, isChecked ->
-                    viewModel.update(chore, isChecked)
-                }, showCompletionDate = true, viewModel = viewModel, settingsViewModel = settingsViewModel)
+            val incompleteChores = chores.filter { !it.isCompleted }
+            val completedChores = chores.filter { it.isCompleted && (it.completedAt != null && System.currentTimeMillis() - it.completedAt < 3600000) }
 
-                if (completedChores.isNotEmpty()) {
-                    HorizontalDivider()
+            if (incompleteChores.isEmpty() && completedChores.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.no_chares_found),
+                        color = Color.Gray,
+                        textAlign = TextAlign.Center
+                    )
                 }
+            } else {
+                Column(modifier = Modifier.padding(paddingValues)) {
+                    ChoreList(chores = incompleteChores, onChoreCheckedChange = { chore, isChecked ->
+                        viewModel.update(chore, isChecked)
+                    }, showCompletionDate = true, viewModel = viewModel, settingsViewModel = settingsViewModel)
 
-                ChoreList(chores = completedChores, onChoreCheckedChange = { chore, isChecked ->
-                    viewModel.update(chore, isChecked)
-                }, showCompletionDate = true, viewModel = viewModel, settingsViewModel = settingsViewModel)
+                    if (completedChores.isNotEmpty()) {
+                        HorizontalDivider()
+                    }
+
+                    ChoreList(chores = completedChores, onChoreCheckedChange = { chore, isChecked ->
+                        viewModel.update(chore, isChecked)
+                    }, showCompletionDate = true, viewModel = viewModel, settingsViewModel = settingsViewModel)
+                }
             }
         }
     }

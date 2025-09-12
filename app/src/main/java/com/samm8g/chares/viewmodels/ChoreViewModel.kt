@@ -6,11 +6,25 @@ import androidx.lifecycle.viewModelScope
 import com.samm8g.chares.data.Chore
 import com.samm8g.chares.repositories.ChoreRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class ChoreViewModel(private val repository: ChoreRepository) : ViewModel() {
 
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
     val allChores: Flow<List<Chore>> = repository.allChores
+
+    init {
+        viewModelScope.launch {
+            allChores.first() // Wait for the first emission
+            _isLoading.value = false
+        }
+    }
 
     fun insert(chore: Chore) = viewModelScope.launch {
         repository.insert(chore)
