@@ -32,6 +32,11 @@ It provides an intuitive interface for adding, tracking, and managing daily chor
 
 ---
 
+## ❗ Important
+- Alpha and Beta versions are signed with debug signatures. Release version keys are valid for four years from the initial release date. After four years, the key is renewed, invalidating older version keys. Please take this into consideration!
+
+---
+
 ## 🚀 Building
 
 ### Requirements
