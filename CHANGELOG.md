@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 2025-09-13
+
+### Added
+
+- **Chore Editing:** Implemented chore editing functionality. Users can now long-press on a chore to open an edit dialog, where they can update the chore's title or delete it.
+- **Delete Confirmation:** Added a confirmation dialog when deleting a chore from the edit screen to prevent accidental deletions.
+
+### Changed
+
+- **Chore Interaction:** Changed the long-press gesture on a chore item to open the new edit dialog instead of directly showing a delete confirmation.
+
+---
+
 ## 2025-09-12
 
 ### Added
