@@ -46,7 +46,7 @@ fun ChoreList(chores: List<Chore>, onChoreCheckedChange: (Chore, Boolean) -> Uni
             chore ->
             ChoreItem(chore = chore, onCheckedChange = { isChecked ->
                 onChoreCheckedChange(chore, isChecked)
-            }, showCompletionDate = showCompletionDate, viewModel = viewModel, settingsViewModel = settingsViewModel, modifier = if (settingsViewModel.animationsEnabled.collectAsState().value) Modifier.animateItemPlacement() else Modifier)
+            }, showCompletionDate = showCompletionDate, viewModel = viewModel, settingsViewModel = settingsViewModel, modifier = if (settingsViewModel.animationsEnabled.collectAsState().value) Modifier.animateItem() else Modifier)
         }
     }
 }
