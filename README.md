@@ -1,23 +1,27 @@
-![Chares](.github/Chares.png)
+<img src=".github/Chares.png" alt="Chares" width="15%">
+
 # Chares
 
 **Chares** is a simple Android application built with **Jetpack Compose** to help users manage chores and tasks.
 It provides an intuitive interface for adding, tracking, and managing daily chores, with localization support.
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/Ssmm8g/Chares)
+[![Build Status](https://img.shields.io/badge/build-passing-green)](https://github.com/Ssmm8g/Chares)
 [![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](https://opensource.org/licenses/GPL-3.0)
-[![Version](https://img.shields.io/badge/version-1.1.0-yellow.svg)](https://github.com/Samm8g/Chares/releases/latest)
+[![Version](https://img.shields.io/badge/version-1.2.2-brightgreen.svg)](https://github.com/Samm8g/Chares/releases/latest)
 
 ## 📷 Screenshots
-TODO: Add Screenshots 
 
-![Home Screen](.github/screenshots/home_screen.png)
-![Home Screen Fixed](.github/screenshots/home_screen_fixed.png)
-![Home Screen Dark](.github/screenshots/home_screen_dark.png)
+<img src=".github/screenshots/home_screen.png" alt="Home Screen" width="15%">
+<img src=".github/screenshots/home_screen_fixed.png" alt="Home Screen Fixed" width="15%">
+<img src=".github/screenshots/home_screen_dark.png" alt="Home Screen Dark" width="15%">
 
-![All History](.github/screenshots/all_history_screen.png)
-![Add Chare](.github/screenshots/add_chare_screen.png)
-![Confirm Delete](.github/screenshots/confirm_delete_screen.png)
+---
+
+<img src=".github/screenshots/all_history.png" alt="All History" width="15%">
+<img src=".github/screenshots/add_chare.png" alt="Add Chare" width="15%">
+<img src=".github/screenshots/edit_chare.png" alt="Edit Chare" width="15%">
+
+*Source: Pixel 9a API 36.0 AVD*
 
 ## ✨ Features
 - ✅ Chore management
