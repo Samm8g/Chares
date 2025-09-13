@@ -36,7 +36,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.samm8g.chares.AppNavigation
 import com.samm8g.chares.data.preferences.CompletedChoreDisplayManager
 import com.samm8g.chares.data.preferences.HapticManager
 import com.samm8g.chares.data.preferences.LanguageManager

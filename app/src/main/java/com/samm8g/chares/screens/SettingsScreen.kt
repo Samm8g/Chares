@@ -1,6 +1,6 @@
-
 package com.samm8g.chares.screens
 
+import android.annotation.SuppressLint
 import com.samm8g.chares.data.preferences.CompletedChoreDisplayManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -39,10 +39,12 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
+@SuppressLint("LocalContextConfigurationRead")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
@@ -122,7 +124,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
                             trailingIcon = {
                                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                             },
-                            modifier = Modifier.menuAnchor()
+                            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                         )
                         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                             DropdownMenuItem(text = { Text(stringResource(id = R.string.settings_screen_language_english)) }, onClick = {
@@ -218,7 +220,7 @@ fun SettingsScreen(navController: NavController, viewModel: SettingsViewModel) {
                             trailingIcon = {
                                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                             },
-                            modifier = Modifier.menuAnchor()
+                            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                         )
                         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                             options.forEach { (durationMillis, durationText) ->

@@ -2,7 +2,6 @@ package com.samm8g.chares.screens
 
 import com.samm8g.chares.data.preferences.CompletedChoreDisplayManager
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,23 +23,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.samm8g.chares.ChoreApplication
 import com.samm8g.chares.R
 import com.samm8g.chares.composables.AddChoreDialog
 import com.samm8g.chares.composables.ChoreList
 import com.samm8g.chares.data.Chore
-import com.samm8g.chares.data.preferences.HapticManager
-import com.samm8g.chares.data.preferences.LanguageManager
-import com.samm8g.chares.data.preferences.ThemeManager
 import com.samm8g.chares.viewmodels.ChoreViewModel
 import com.samm8g.chares.viewmodels.SettingsViewModel
-import com.samm8g.chares.viewmodels.SettingsViewModelFactory
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel) {
