@@ -2,6 +2,7 @@ package com.samm8g.chares.composables
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -60,7 +61,7 @@ fun ChoreList(chores: List<Chore>, onChoreCheckedChange: (Chore, Boolean) -> Uni
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDate: Boolean, viewModel: ChoreViewModel, settingsViewModel: SettingsViewModel, modifier: Modifier = Modifier) {
-    var showDeleteConfirmationDialog by remember { mutableStateOf(false) }
+    var showEditChoreDialog by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
     val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
 
@@ -70,17 +71,17 @@ fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDa
         .padding(8.dp)
         .defaultMinSize(minHeight = 72.dp)
         .combinedClickable(
-            onClick = { 
+            onClick = {
                 if (hapticFeedback) {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 }
-                onCheckedChange(!chore.isCompleted) 
+                onCheckedChange(!chore.isCompleted)
             },
-            onLongClick = { 
+            onLongClick = {
                 if (hapticFeedback) {
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 }
-                showDeleteConfirmationDialog = true
+                showEditChoreDialog = true
             }
         )
     )
@@ -103,9 +104,91 @@ fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDa
         }
     }
 
-    if (showDeleteConfirmationDialog) {
+    if (showEditChoreDialog) {
+        EditChoreDialog(
+            chore = chore,
+            onDismiss = { showEditChoreDialog = false },
+            onChoreUpdate = { updatedChore ->
+                viewModel.update(updatedChore)
+                showEditChoreDialog = false
+            },
+            onChoreDelete = {
+                viewModel.delete(it)
+                showEditChoreDialog = false
+            },
+            settingsViewModel = settingsViewModel
+        )
+    }
+}
+
+@Composable
+fun EditChoreDialog(
+    chore: Chore,
+    onDismiss: () -> Unit,
+    onChoreUpdate: (Chore) -> Unit,
+    onChoreDelete: (Chore) -> Unit,
+    settingsViewModel: SettingsViewModel
+) {
+    var text by remember { mutableStateOf(chore.title) }
+    var showDeleteConfirmDialog by remember { mutableStateOf(false) }
+    val haptic = LocalHapticFeedback.current
+    val hapticFeedback by settingsViewModel.hapticFeedback.collectAsState()
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = stringResource(id = R.string.chore_edit_chore)) },
+        text = {
+            TextField(
+                value = text,
+                onValueChange = { text = it },
+                label = { Text(stringResource(id = R.string.chore_title)) }
+            )
+        },
+        confirmButton = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                TextButton(
+                    onClick = {
+                        if (hapticFeedback) {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        }
+                        showDeleteConfirmDialog = true
+                    }
+                ) {
+                    Text(stringResource(id = R.string.delete))
+                }
+                TextButton(
+                    onClick = {
+                        if (hapticFeedback) {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        }
+                        onDismiss()
+                    }
+                ) {
+                    Text(stringResource(id = R.string.cancel))
+                }
+                TextButton(
+                    onClick = {
+                        if (hapticFeedback) {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                        }
+                        if (text.isNotBlank()) {
+                            onChoreUpdate(chore.copy(title = text))
+                        }
+                    },
+                    enabled = text.isNotBlank()
+                ) {
+                    Text(stringResource(id = R.string.update))
+                }
+            }
+        }
+    )
+
+    if (showDeleteConfirmDialog) {
         AlertDialog(
-            onDismissRequest = { showDeleteConfirmationDialog = false },
+            onDismissRequest = { showDeleteConfirmDialog = false },
             title = { Text(text = stringResource(id = R.string.chore_delete_chore)) },
             text = { Text(text = stringResource(id = R.string.chore_delete_confirmation, chore.title)) },
             confirmButton = {
@@ -113,18 +196,19 @@ fun ChoreItem(chore: Chore, onCheckedChange: (Boolean) -> Unit, showCompletionDa
                     if (hapticFeedback) {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     }
-                    viewModel.delete(chore)
-                    showDeleteConfirmationDialog = false
+                    onChoreDelete(chore)
+                    showDeleteConfirmDialog = false
+                    onDismiss()
                 }) {
                     Text(stringResource(id = R.string.confirm))
                 }
             },
             dismissButton = {
-                TextButton(onClick = { 
+                TextButton(onClick = {
                     if (hapticFeedback) {
                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     }
-                    showDeleteConfirmationDialog = false 
+                    showDeleteConfirmDialog = false
                 }) {
                     Text(stringResource(id = R.string.cancel))
                 }

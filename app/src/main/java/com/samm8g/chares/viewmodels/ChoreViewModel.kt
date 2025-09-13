@@ -38,6 +38,10 @@ class ChoreViewModel(private val repository: ChoreRepository) : ViewModel() {
         repository.update(updatedChore)
     }
 
+    fun update(chore: Chore) = viewModelScope.launch {
+        repository.update(chore)
+    }
+
     fun delete(chore: Chore) = viewModelScope.launch {
         repository.delete(chore)
     }
