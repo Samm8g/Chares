@@ -2,6 +2,19 @@
 
 ## 2025-09-13
 
+### Changed
+
+- **Dependency Updates:** Updated various dependencies in `gradle/libs.versions.toml` including AGP, Kotlin, Compose BOM, Core KTX, Material, Lifecycle, Room, KSP, Compose Compiler, Navigation Compose, DataStore, and Kotlinx Serialization JSON to their latest stable versions.
+- **Build Configuration:** Migrated `jvmTarget` configuration in `app/build.gradle.kts` to use `jvmToolchain(11)` for improved compatibility and to address deprecation warnings.
+- **Compose Modifier Usage:** Replaced deprecated `Modifier.animateItemPlacement()` with `Modifier.animateItem()` in `ChoreComposables.kt` to align with newer Compose Foundation library versions.
+- **Database Migration:** Corrected parameter naming in `AppDatabase.kt`'s `Migration` implementation from `database` to `db` to resolve a compilation warning.
+- **UI Component Usage:** Updated `Modifier.menuAnchor()` usage in `SettingsScreen.kt` to use `MenuAnchorType.Primary, true` and corrected related imports to address deprecation warnings and compilation errors.
+- **Image Resizing:** Resized all images in `README.md` to 15% width for better display.
+
+---
+
+## 2025-09-13
+
 ### Added
 
 - **Chore Editing:** Implemented chore editing functionality. Users can now long-press on a chore to open an edit dialog, where they can update the chore's title or delete it.
