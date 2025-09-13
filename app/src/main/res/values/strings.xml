@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Chares</string>
+    <string name="app_name" translatable="false">Chares</string>
 
     <!-- Common -->
     <string name="add">Add</string>
@@ -15,7 +15,10 @@
     <string name="chore_delete_chore">Delete Chore</string>
     <string name="chore_delete_confirmation">Are you sure you want to delete %s?</string>
     <string name="chore_add_new_chore">Add a new chore</string>
+    <string name="chore_edit_chore">Edit Chore</string>
     <string name="chore_title">Chore title</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
 
     <!-- Settings Screen -->
     <string name="settings_screen_theme">Theme</string>
