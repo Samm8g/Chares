@@ -33,8 +33,6 @@ TODO: Add Screenshots
 ## 📌 Upcoming Features
 - **Localization Improvements**: More robust language support
 - **Welcome Screen**: Guide for first-time users
-- **Animations**: Smooth transitions between tabs and lists (feature/animations)
-- **Chore Editing**: Ability to edit existing chore details
 
 ## ⚠️ Known Issues
 - **Translation bug**: some UI strings may not appear localized or break upon changing language
