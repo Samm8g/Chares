@@ -11,17 +11,17 @@ It provides an intuitive interface for adding, tracking, and managing daily chor
 
 ## 📷 Screenshots
 
-<img src=".github/screenshots/home_screen.png" alt="Home Screen" width="15%">
-<img src=".github/screenshots/home_screen_fixed.png" alt="Home Screen Fixed" width="15%">
-<img src=".github/screenshots/home_screen_dark.png" alt="Home Screen Dark" width="15%">
+| <img src=".github/screenshots/home_screen.png" alt="Home Screen" width="15%"> | <img src=".github/screenshots/home_screen_fixed.png" alt="Home Screen Fixed" width="15%"> | <img src=".github/screenshots/home_screen_dark.png" alt="Home Screen Dark" width="15%">
+|---|---|---|
 
 ---
 
-<img src=".github/screenshots/all_history.png" alt="All History" width="15%">
-<img src=".github/screenshots/add_chare.png" alt="Add Chare" width="15%">
-<img src=".github/screenshots/edit_chare.png" alt="Edit Chare" width="15%">
+| <img src=".github/screenshots/all_history.png" alt="All History" width="15%"> | <img src=".github/screenshots/add_chare.png" alt="Add Chare" width="15%"> | <img src=".github/screenshots/edit_chare.png" alt="Edit Chare" width="15%">
+|---|---|---|
 
 *Source: Pixel 9a API 36.0 AVD*
+
+---
 
 ## ✨ Features
 - ✅ Chore management
